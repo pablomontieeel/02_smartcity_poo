@@ -26,7 +26,7 @@ class Vehiculo:
 
     def recargar(self, energia_kwh: float) -> float:
         porcentaje_recarga = (energia_kwh / self.capacidad_kwh) * 100.0
-        porcentaje_recarga = porcentaje_recarga + self.nivel_bateria
-        if porcentaje_recarga > 100.0:
-            porcentaje_recarga = 100.0
+        self.nivel_bateria = porcentaje_recarga + self.nivel_bateria
+        if self.nivel_bateria > 100.0:
+            self.nivel_bateria = 100.0
         return self.nivel_bateria
