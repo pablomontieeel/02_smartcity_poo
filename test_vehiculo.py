@@ -1,6 +1,6 @@
 from vehiculo import Vehiculo
 
-coche1 = Vehiculo("1234-BBB", "Urban-E", 40.0)
+coche1 = Vehiculo("1234-BBB", "Urban-E", 30.0)
 coche2 = Vehiculo("5678-FFF", "EcoVan", 75.0)
 
 print("--- Estado inicial ---")
