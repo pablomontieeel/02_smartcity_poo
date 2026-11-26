@@ -71,6 +71,18 @@ class CocheElectrico(Vehiculo):
         # 2. Inicializamos el atributo exclusivo de esta subclase
         self.plazas: int = plazas
 
+    def conducir(self, distancia_km: float) -> bool:
+            """Simula un trayecto urbano. Consume 0.15 kWh por cada km recorrido."""
+            energia_necesaria = distancia_km * 0.15
+            porcentaje_consumido = (energia_necesaria / self.capacidad_kwh) * 100.0
+    
+            if self.nivel_bateria >= porcentaje_consumido:
+                self.nivel_bateria -= porcentaje_consumido
+                self._kilometros_totales = self._kilometros_totales + distancia_km
+                return True
+            else:
+                return False
+
     def obtener_estado(self) -> str:
         """Sobreescribe obtener_estado() añadiendo las plazas del vehículo."""
         estado_base = super().obtener_estado()
@@ -100,6 +112,5 @@ class PatineteElectrico(Vehiculo):
                 return False
 
     def obtener_estado(self) -> str:
-            
-            estado_base = super().obtener_estado(f" | Velocidad máxima: {self.velocidad_maxima_kmh} km/h")
-            return f"{estado_base} | Velocidad máxima: {self.velocidad_maxima_kmh} km/h"
+        estado_base = super().obtener_estado()
+        return f"{estado_base} | Velocidad máxima: {self.velocidad_maxima_kmh} km/h"
