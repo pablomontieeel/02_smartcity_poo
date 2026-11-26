@@ -61,3 +61,45 @@ class Vehiculo:
         else:
             self.nivel_bateria = nuevo_nivel
         return self.nivel_bateria
+
+class CocheElectrico(Vehiculo):
+    """Subclase que representa un automóvil eléctrico de pasajeros."""
+
+    def __init__(self, matricula: str, modelo: str, capacidad_kwh: float, plazas: int = 5):
+        # 1. Delegamos en la superclase para inicializar los atributos comunes
+        super().__init__(matricula, modelo, capacidad_kwh)
+        # 2. Inicializamos el atributo exclusivo de esta subclase
+        self.plazas: int = plazas
+
+    def obtener_estado(self) -> str:
+        """Sobreescribe obtener_estado() añadiendo las plazas del vehículo."""
+        estado_base = super().obtener_estado()
+        return f"{estado_base} | Plazas: {self.plazas}"
+
+    
+class PatineteElectrico(Vehiculo):
+
+    def __init__(self, matricula: str, modelo: str, capacidad_kwh: float, velocidad_maxima_kmh: float = 25.0):
+        super().__init__(matricula, modelo, capacidad_kwh)
+        self.velocidad_maxima_kmh: float = velocidad_maxima_kmh
+        if velocidad_maxima_kmh > 25.0:
+            raise ValueError("La velocidad máxima no puede exceder los 25 km/h.")
+        if velocidad_maxima_kmh < 0:
+            raise ValueError("La velocidad máxima no puede ser negativa.")
+        
+    def conducir(self, distancia_km: float) -> bool:
+            """Simula un trayecto urbano. Consume 0.02 kWh por cada km recorrido."""
+            energia_necesaria = distancia_km * 0.02
+            porcentaje_consumido = (energia_necesaria / self.capacidad_kwh) * 100.0
+    
+            if self.nivel_bateria >= porcentaje_consumido:
+                self.nivel_bateria -= porcentaje_consumido
+                self._kilometros_totales = self._kilometros_totales + distancia_km
+                return True
+            else:
+                return False
+
+    def obtener_estado(self) -> str:
+            
+            estado_base = super().obtener_estado(f" | Velocidad máxima: {self.velocidad_maxima_kmh} km/h")
+            return f"{estado_base} | Velocidad máxima: {self.velocidad_maxima_kmh} km/h"
